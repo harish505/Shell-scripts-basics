@@ -1,0 +1,18 @@
+# copy a file from dir1 to dir2 only if dir2 is empty. using ansible
+---
+- name: copy a file from dir1 to dir2 only if dir2 is empty
+  hosts: your_target_hosts
+  become: true
+  tasks:
+    - name: check if dir2 is empty
+      find:
+        paths: /path/to/dir2
+        recurse: no
+        register: dir2_contents
+    - name: copy a file if the dir2 is empty
+      copy:
+        src: /path/to/dir1/sample.txt
+        dest: /path/to/dir2
+      when: dir2_contents.matched == 0
+
+2. What are the roles in Ansible? what will be the use of roles?
